@@ -31,6 +31,15 @@ export class UserComponent implements OnInit {
     Dt_Create: new FormControl(),
   });
 
+  detailsForm = new FormGroup({
+    Id: new FormControl(),
+    Name: new FormControl(),
+    LastName: new FormControl(),
+    Email: new FormControl(),
+    Status: new FormControl(),
+    Dt_Create: new FormControl(),
+  });
+
   constructor(
     private userService: UserService,
     private modalService: NgbModal) { }
@@ -77,6 +86,20 @@ export class UserComponent implements OnInit {
       this.GetAllUser();
       this.modalService.dismissAll();
     });
+  }
+
+  // OpenModalDetails
+  openModalDetails(user: any, modal: any) {
+    this.detailsForm = new FormGroup({
+      Id: new FormControl(user.id),
+      Name: new FormControl(user.name),
+      LastName: new FormControl(user.lastName, [Validators.required]),
+      Email: new FormControl(user.email, [Validators.required]),
+      Status: new FormControl(user.status),
+      Dt_Create: new FormControl(user.dt_Create),
+    });
+
+    this.openModal(modal);
   }
 
   openModal(content: any) {
