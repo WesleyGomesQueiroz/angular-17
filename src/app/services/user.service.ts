@@ -14,4 +14,8 @@ export class UserService {
   create(user: any) {
     return this.httpClient.post(`https://localhost:44338/api/CRUD/Create`, user);
   }
+
+  update(user: any) {
+    return this.httpClient.put(`https://localhost:44338/api/CRUD/Update`, user);
+  }
 }

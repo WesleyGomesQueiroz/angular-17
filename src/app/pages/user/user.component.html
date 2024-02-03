@@ -44,7 +44,7 @@
                         <td><input type="checkbox" [checked]="item.status" disabled></td>
                         <td>{{item.dt_Create | date: 'dd/MM/yyyy'}}</td>
                         <td>
-                            <a title="Edit" class="btn btn-warning"> <i class="bi bi-pencil-square"></i> </a>&nbsp;
+                            <a title="Edit" class="btn btn-warning" (click)="openModalEdit(item, modalUpdate)"> <i class="bi bi-pencil-square"></i> </a>&nbsp;
                             <a title="Details" class="btn btn-primary"> <i class="bi bi-search"></i> </a>&nbsp;
                             <a title="Delete" class="btn btn-danger"> <i class="bi bi-trash3"></i> </a>
                         </td>
@@ -58,6 +58,7 @@
     </div>
 </div>
 
+<!-- Create -->
 <ng-template #modalCreate let-modal>
     <div class="modal-body">
         <h2>Criar Novo Usuario</h2>
@@ -87,6 +88,45 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Salvar" class="btn btn-success"  [disabled]='createForm.invalid'/>&nbsp;
+                        <a class="btn btn-info" (click)="modal.close('Save click')">Voltar</a>
+                    </div>
+                </div>
+        
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<!-- Update -->
+<ng-template #modalUpdate let-modal>
+    <div class="modal-body">
+        <h2>Editar Usuario</h2>
+
+        <form [formGroup]="updateForm" (ngSubmit)="update()">
+            <div class="form-horizontal">
+                <hr />        
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="Nome" formControlName="Name" />
+                        <label *ngIf="updateForm.controls['Name'].invalid && updateForm.controls['Name'].touched" style="color: red;">Name é obrigatório</label>
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="SobreNome" formControlName="LastName"/>
+                        <label *ngIf="updateForm.controls['LastName'].invalid && updateForm.controls['LastName'].touched" style="color: red;">SobreNome é obrigatório</label>
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="E-mail" formControlName="Email"/>
+                        <label *ngIf="updateForm.controls['Email'].invalid && updateForm.controls['Email'].touched" style="color: red;">E-mail é obrigatório</label>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Editar" class="btn btn-success"  [disabled]='updateForm.invalid'/>&nbsp;
                         <a class="btn btn-info" (click)="modal.close('Save click')">Voltar</a>
                     </div>
                 </div>

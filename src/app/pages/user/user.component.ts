@@ -22,6 +22,15 @@ export class UserComponent implements OnInit {
     Email: new FormControl('', [Validators.required])
   });
 
+  updateForm = new FormGroup({
+    Id: new FormControl(),
+    Name: new FormControl('', [Validators.required]),
+    LastName: new FormControl('', [Validators.required]),
+    Email: new FormControl('', [Validators.required]),
+    Status: new FormControl(),
+    Dt_Create: new FormControl(),
+  });
+
   constructor(
     private userService: UserService,
     private modalService: NgbModal) { }
@@ -36,6 +45,7 @@ export class UserComponent implements OnInit {
     });
   }
 
+  // Create
   openModalCreate(modal: any) {
     this.createForm.reset();
     this.openModal(modal);
@@ -43,6 +53,27 @@ export class UserComponent implements OnInit {
 
   create() {
     this.userService.create(this.createForm.value).subscribe(resp => {
+      this.GetAllUser();
+      this.modalService.dismissAll();
+    });
+  }
+
+  // Edit
+  openModalEdit(user: any, modal: any) {
+    this.updateForm = new FormGroup({
+      Id: new FormControl(user.id),
+      Name: new FormControl(user.name, [Validators.required]),
+      LastName: new FormControl(user.lastName, [Validators.required]),
+      Email: new FormControl(user.email, [Validators.required]),
+      Status: new FormControl(user.status),
+      Dt_Create: new FormControl(user.dt_Create),
+    });
+
+    this.openModal(modal);
+  }
+
+  update() {
+    this.userService.update(this.updateForm.value).subscribe(resp => {
       this.GetAllUser();
       this.modalService.dismissAll();
     });
