@@ -46,7 +46,7 @@
                         <td>
                             <a title="Edit" class="btn btn-warning" (click)="openModalEdit(item, modalUpdate)"> <i class="bi bi-pencil-square"></i> </a>&nbsp;
                             <a title="Details" class="btn btn-primary" (click)="openModalDetails(item, modalDetails)"> <i class="bi bi-search"></i> </a>&nbsp;
-                            <a title="Delete" class="btn btn-danger"> <i class="bi bi-trash3"></i> </a>
+                            <a title="Delete" class="btn btn-danger" (click)="openModalDelete(item, modalDelete)"> <i class="bi bi-trash3"></i> </a>
                         </td>
                     </tr>
                 </tbody>
@@ -165,6 +165,46 @@
         
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
+                        <a class="btn btn-info" (click)="modal.close('Save click')">Voltar</a>
+                    </div>
+                </div>
+        
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<!-- Delete -->
+<ng-template #modalDelete let-modal>
+    <div class="modal-body">
+        <h2>Delete Usuario</h2>
+        <h6>Tem certeza que desaja deletar este usuario?</h6>
+
+        <form [formGroup]="deleteForm" (ngSubmit)="delete()">
+            <div class="form-horizontal">
+                <hr />        
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <label>Nome</label>
+                        <input class="form-control" value="{{deleteForm.value.Name}}" disabled />
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <label>SobreNome</label>
+                        <input class="form-control" value="{{deleteForm.value.LastName}}" disabled/>
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <label>Email</label>
+                        <input class="form-control" value="{{deleteForm.value.Email}}" disabled/>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Deletar" class="btn btn-danger"/>&nbsp;
                         <a class="btn btn-info" (click)="modal.close('Save click')">Voltar</a>
                     </div>
                 </div>

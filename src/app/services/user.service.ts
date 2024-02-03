@@ -18,4 +18,9 @@ export class UserService {
   update(user: any) {
     return this.httpClient.put(`https://localhost:44338/api/CRUD/Update`, user);
   }
+
+  delete(id: any) {
+    console.log(`https://localhost:44338/api/CRUD/Delete/${id}`)
+    return this.httpClient.delete(`https://localhost:44338/api/CRUD/Delete/${id}`);
+  }
 }

@@ -40,6 +40,15 @@ export class UserComponent implements OnInit {
     Dt_Create: new FormControl(),
   });
 
+  deleteForm = new FormGroup({
+    Id: new FormControl(),
+    Name: new FormControl(),
+    LastName: new FormControl(),
+    Email: new FormControl(),
+    Status: new FormControl(),
+    Dt_Create: new FormControl(),
+  });
+
   constructor(
     private userService: UserService,
     private modalService: NgbModal) { }
@@ -88,7 +97,7 @@ export class UserComponent implements OnInit {
     });
   }
 
-  // OpenModalDetails
+  // Details
   openModalDetails(user: any, modal: any) {
     this.detailsForm = new FormGroup({
       Id: new FormControl(user.id),
@@ -100,6 +109,27 @@ export class UserComponent implements OnInit {
     });
 
     this.openModal(modal);
+  }
+
+   // Delete
+  openModalDelete(user: any, modal: any) {
+    this.deleteForm = new FormGroup({
+      Id: new FormControl(user.id),
+      Name: new FormControl(user.name),
+      LastName: new FormControl(user.lastName),
+      Email: new FormControl(user.email),
+      Status: new FormControl(user.status),
+      Dt_Create: new FormControl(user.dt_Create),
+    });
+
+    this.openModal(modal);    
+  }
+
+  delete() {
+    this.userService.delete(this.deleteForm.value.Id).subscribe(resp => {
+      this.GetAllUser();
+      this.modalService.dismissAll();
+    });
   }
 
   openModal(content: any) {
