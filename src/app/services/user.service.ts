@@ -10,4 +10,8 @@ export class UserService {
   GetAllUser() {
     return this.httpClient.get(`https://localhost:44338/api/CRUD/GetAllUser`);
   }
+
+  create(user: any) {
+    return this.httpClient.post(`https://localhost:44338/api/CRUD/Create`, user);
+  }
 }

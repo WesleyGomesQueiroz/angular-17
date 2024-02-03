@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div>
                     <div class="pull-left">
-                        <a class="btn btn-primary">
+                        <a class="btn btn-primary" (click)="openModalCreate(modalCreate)">
                             <i class="bi bi-person-plus"></i>
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                         <td>{{item.name}}</td>
                         <td>{{item.lastName}}</td>
                         <td>{{item.email}}</td>
-                        <td><input type="checkbox" [checked]="item.status"></td>
+                        <td><input type="checkbox" [checked]="item.status" disabled></td>
                         <td>{{item.dt_Create | date: 'dd/MM/yyyy'}}</td>
                         <td>
                             <a title="Edit" class="btn btn-warning"> <i class="bi bi-pencil-square"></i> </a>&nbsp;
@@ -57,3 +57,41 @@
 
     </div>
 </div>
+
+<ng-template #modalCreate let-modal>
+    <div class="modal-body">
+        <h2>Criar Novo Usuario</h2>
+
+        <form [formGroup]="createForm" (ngSubmit)="create()">
+            <div class="form-horizontal">
+                <hr />        
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="Nome" formControlName="Name" />
+                        <label *ngIf="createForm.controls['Name'].invalid && createForm.controls['Name'].touched" style="color: red;">Name é obrigatório</label>
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="SobreNome" formControlName="LastName"/>
+                        <label *ngIf="createForm.controls['LastName'].invalid && createForm.controls['LastName'].touched" style="color: red;">SobreNome é obrigatório</label>
+                    </div>
+                </div>   
+                <div class="form-group mb-3">
+                    <div class="col-md-10">
+                        <input class="form-control" placeholder="E-mail" formControlName="Email"/>
+                        <label *ngIf="createForm.controls['Email'].invalid && createForm.controls['Email'].touched" style="color: red;">E-mail é obrigatório</label>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Salvar" class="btn btn-success"  [disabled]='createForm.invalid'/>&nbsp;
+                        <a class="btn btn-info" (click)="modal.close('Save click')">Voltar</a>
+                    </div>
+                </div>
+        
+            </div>
+        </form>
+    </div>
+</ng-template>
