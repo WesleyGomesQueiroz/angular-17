@@ -3,16 +3,18 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { NgbModal, NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 
 export class UserComponent implements OnInit {
+  loading = false;
   list: any;
   closeModal: any;
 
@@ -58,8 +60,10 @@ export class UserComponent implements OnInit {
   }
 
   GetAllUser() {
+    this.loading = true;
     this.userService.GetAllUser().subscribe(resp => {
       this.list = resp;
+      this.loading = false;
     });
   }
 
@@ -70,6 +74,7 @@ export class UserComponent implements OnInit {
   }
 
   create() {
+    this.loading = true;
     this.userService.create(this.createForm.value).subscribe(resp => {
       this.GetAllUser();
       this.modalService.dismissAll();
@@ -91,6 +96,7 @@ export class UserComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.userService.update(this.updateForm.value).subscribe(resp => {
       this.GetAllUser();
       this.modalService.dismissAll();
@@ -126,6 +132,7 @@ export class UserComponent implements OnInit {
   }
 
   delete() {
+    this.loading = true;
     this.userService.delete(this.deleteForm.value.Id).subscribe(resp => {
       this.GetAllUser();
       this.modalService.dismissAll();
